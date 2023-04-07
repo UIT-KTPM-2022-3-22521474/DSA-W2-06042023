@@ -5,10 +5,10 @@
 #include <set>
 using namespace std;
 
-set < int > a;
+set <int> a;
 int b[100005];
-bool ok = true;
-vector < int > arr;
+bool checker = true;
+vector <int> arr;
 
 int main()
 {
@@ -42,17 +42,17 @@ int main()
         int u = 0;
         while (j > 0)
         {
-            ok = true;
+            checker = true;
             while (u < n - 1)
             {
                 if (b[u] == b[u + 1])
                 {
                     arr.push_back(b[u]);
                     j--;
-                    ok = false;
+                    checker = false;
                 }
                 u++;
-                if (ok == false) 
+                if (checker == false) 
                     break;
             }
         }
