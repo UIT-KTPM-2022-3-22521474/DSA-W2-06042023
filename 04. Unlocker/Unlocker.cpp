@@ -1,81 +1,84 @@
 #include <iostream>
-#include <algorithm>
 #include <string>
-
+#include <algorithm>
 using namespace std;
 
-int main() {
-    string s;
-    cin >> s;
-    int sum = 0;
-    int count[10] = { 0 };
-    for (char c : s) {
-        int digit = c - '0';
-        sum += digit;
-        count[digit]++;
-    }
-    if (sum % 3 == 1) {
-        if (count[1] > 0) {
-            for (int i = s.size() - 1; i >= 0; i--) {
-                if ((s[i] - '0') == 1) {
-                    s.erase(i, 1);
-                    break;
-                }
-            }
-        }
-        else {
-            int cnt = 0;
-            for (int i = 2; i <= 8; i += 3) {
-                cnt += count[i];
-            }
-            if (cnt >= 2) {
-                int removed = 0;
-                for (int i = s.size() - 1; i >= 0 && removed < 2; i--) {
-                    if ((s[i] - '0') == 2 || (s[i] - '0') == 5 || (s[i] - '0') == 8) {
-                        s.erase(i, 1);
-                        removed++;
-                    }
-                }
-            }
-            else {
-                cout << "-1\n";
-                return 0;
-            }
-        }
-    }
-    else if (sum % 3 == 2) {
-        if (count[2] > 0) {
-            for (int i = s.size() - 1; i >= 0; i--) {
-                if ((s[i] - '0') == 2) {
-                    s.erase(i, 1);
-                    break;
-                }
-            }
-        }
-        else {
-            int cnt = 0;
-            for (int i = 1; i <= 7; i += 3) {
-                cnt += count[i];
-            }
-            if (cnt >= 2) {
-                int removed = 0;
-                for (int i = s.size() - 1; i >= 0 && removed < 2; i--) {
-                    if ((s[i] - '0') == 1 || (s[i] - '0') == 4 || (s[i] - '0') == 7) {
-                        s.erase(i, 1);
-                        removed++;
-                    }
-                }
-            }
-            else {
-                cout << "-1\n";
-                return 0;
-            }
-        }
-    }
-    sort(s.rbegin(), s.rend());
-    while (s.size() > 1 && s.back() == '0') {
-        s.pop_back();
-    }
-    cout << s << endl;
-    return 0;
+bool cmp(const char a, const char b)
+{
+	return a > b;
+}
+
+int main()
+{
+	string s;
+	cin >> s;
+	sort(s.begin(), s.end(), cmp);
+	int sum = 0;
+	for (int i = 0; i < s.length(); i++)
+		sum += (int)(s[i] - '0');
+	if (sum % 3 == 1)
+	{
+		bool kt = false;
+		int d = s.length() - 1;
+		while (d >= 0)
+		{
+			if ((int)(s[d] - '0') % 3 == 1)
+			{
+				s.erase(s.begin() + d);
+				kt = true;
+				break;
+			}
+			d--;
+		}
+		if (kt == false)
+		{
+			d = s.length() - 1;
+			int t = 2;
+			while (d >= 0)
+			{
+				if ((int)(s[d] - '0') % 3 == 2)
+				{
+					s.erase(s.begin() + d);
+					t--;
+					if (t == 0)
+						break;
+				}
+				d--;
+			}
+		}
+	}
+	if (sum % 3 == 2)
+	{
+		bool kt = false;
+		int d = s.length() - 1;
+		while (d >= 0)
+		{
+			if ((int)(s[d] - '0') % 3 == 2)
+			{
+				s.erase(s.begin() + d);
+				kt = true;
+				break;
+			}
+			d--;
+		}
+		if (kt == false)
+		{
+			d = s.length() - 1;
+			int t = 2;
+			while (d >= 0)
+			{
+				if ((int)(s[d] - '0') % 3 == 1)
+				{
+					s.erase(s.begin() + d);
+					t--;
+					if (t == 0)
+						break;
+				}
+				d--;
+			}
+
+		}
+	}
+	cout << s;
+	return 0;
 }
